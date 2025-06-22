@@ -8,11 +8,22 @@
 </head>
 <body>
   <div class="container">
-    {% for new in news %}
-    <h2>{{ new.headline }}</h2>
-    <h5>{{ new.date }}</h5>
-    <p>{{ new.body }}</p>
+     {% for new in news %}
+      <div class="card mb-3">
+        <div class="row g-0">
+          <div>
+            <div class="card-body">
+              <h5 class="card-title">{{ new.headline }}</h5>
+              <p class="card-text">{{ new.body }}</p>
+              <p class="card-text"><small 
+                class="text-muted">
+                {{ news.date }}
+              </small></p>
+            </div>
+          </div>
+        </div>
+      </div>
     {% endfor %}
-    </div>
+  </div>
 </body>
 </html>

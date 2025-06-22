@@ -1,10 +1,14 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from .models import Movie
 
 def home(request):
   searchTerm = request.GET.get('searchMovie')
+  movies = Movie.objects.all()
+  
   return render(request, 'home.html', {
-    'searchTerm' : searchTerm
+    'searchTerm' : searchTerm,
+    'movies': movies
   })
 
 def about(request):
@@ -15,3 +19,5 @@ def signUp(request):
   return render(request, 'signUp.html', {
     'email' : email
   })
+  
+  

@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.shortcuts import get_object_or_404
-from .models import Movie
+from django.shortcuts import get_object_or_404, redirect
+from .models import Movie, Review
+from .forms import ReviewForm
 
 def home(request):
   searchTerm = request.GET.get('searchMovie')
@@ -33,4 +34,31 @@ def signUp(request):
     'email' : email
   })
   
+def create_review(request, movie_id):
+  # First get the object from db:
+  movie = get_object_or_404(Movie, pk=movie_id)
   
+  # pass in the review form for the user to create the review:
+  if request.method == 'GET': 
+    return render(request, 'createreview.html', {
+      'form': ReviewForm(), 
+      'movie': movie 
+    })
+  # When the user submits the createreview form, this function will receive a POST request, and we enter the else clause:
+  else: 
+    try: 
+      # retrieve the submitted form from the req
+      form = ReviewForm(request.POST)
+      # create and save a new review object from the form's values but don't yet put it into the database (commit=False) because we want to specify the user and movie relationships for the review:
+      newReview = form.save(commit=False) 
+      # Finally, we specify the user and movie relationships for the review and save the review into the database:
+      newReview.user = request.user
+      newReview.movie = request.movie
+      newReview.save()
+      return redirect('detail', newReview.movie.id)
+    
+    except ValueError: 
+      return render(request, 'createreview.html', {
+        'form': ReviewForm(), 
+        'error': 'Bad data passed in'
+      })

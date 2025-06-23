@@ -15,4 +15,11 @@ def signupaccount(request):
       user.save()
       login(request, user)
       return redirect('home')
-      
+    # If password1 doesn't match password2 
+    else:
+      return render(request, 'signupaccount.html', {
+        'form': UserCreationForm, 
+        'error': 'Passwords do not match'
+        })
+     
+  

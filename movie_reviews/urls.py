@@ -27,7 +27,8 @@ urlpatterns = [
     path('', movieViews.home, name='home'),
     path('about/', movieViews.about),
     path('signUp', movieViews.signUp, name='signUp'),
-    path('news/', include('news.urls')) # path('news/', include('news.url')) will forward any requests with 'news/' to the news app's urls.py.
+    path('news/', include('news.urls')), # path('news/', include('news.url')) will forward any requests with 'news/' to the news app's urls.py.
+    path('movie/', include('movie.urls'))
 ]
 
 # With this, you can serve the static media from Django.

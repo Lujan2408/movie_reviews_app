@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
 from .models import Movie
 
 def home(request):
@@ -15,6 +16,13 @@ def home(request):
     'movies' : movies
   })
   
+def movie_detail(request, movie_id): 
+  # We use get_object_or_404 to get the specific movie object we want.
+  # We provide movie_id as the primary key, pk=movie_id. If there is a match, get_object_or_404, as its name suggests, returns us the object or the not found (404) object.
+  movie = get_object_or_404(Movie, pk=movie_id)
+  return render(request, 'detail.html', {
+    'movie': movie
+  })
 
 def about(request):
   return HttpResponse('<h1>Welcome to About Page</h1>')

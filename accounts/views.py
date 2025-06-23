@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from .forms import UserCreateForm
 from django.contrib.auth.models import User
-from django.contrib.auth import login
+from django.contrib.auth import login, logout # type: ignore
 from django.db import IntegrityError
 
 def signupaccount(request):
@@ -33,5 +33,7 @@ def signupaccount(request):
         'form': UserCreateForm, 
         'error': 'Passwords do not match'
         })
-     
-  
+      
+def logoutaccount(request): 
+  logout(request)
+  return redirect('home')

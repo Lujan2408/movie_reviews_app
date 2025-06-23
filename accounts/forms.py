@@ -9,6 +9,6 @@ class UserCreateForm(UserCreationForm):
     super(UserCreateForm, self).__init__(*args, **kwargs)
     for fieldname in ['username', 'password1', 'password2']:
       self.fields[fieldname].help_text = None # type: ignore
-      self.fields[fieldname].widget_attrs.update({ # type: ignore
+      self.fields[fieldname].widget.attrs.update({ 
         'class': 'form-control'
       })

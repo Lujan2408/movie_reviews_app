@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
+from .forms import UserCreateForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login
 from django.db import IntegrityError
@@ -8,7 +9,7 @@ def signupaccount(request):
   # If there´s a GET request it means that there's a user navigating to the sign up form via URL(localhost:8000/accounts/signupaccount) then we send them to the login form 
   if request.method == 'GET':
     return render(request, 'signupaccount.html', {
-      'form': UserCreationForm
+      'form': UserCreateForm
     })
     
   else: 
@@ -22,14 +23,14 @@ def signupaccount(request):
       
       except IntegrityError:
         return render(request, 'signupaccount.html', {
-          'form': UserCreationForm,
+          'form': UserCreateForm,
           'error': 'The Username entered already exists. Please choose a new Username to sign up'
         })    
         
     # If password1 doesn't match password2 
     else:
       return render(request, 'signupaccount.html', {
-        'form': UserCreationForm, 
+        'form': UserCreateForm, 
         'error': 'Passwords do not match'
         })
      

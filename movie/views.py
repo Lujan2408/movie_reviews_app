@@ -53,9 +53,9 @@ def create_review(request, movie_id):
       newReview = form.save(commit=False) 
       # Finally, we specify the user and movie relationships for the review and save the review into the database:
       newReview.user = request.user
-      newReview.movie = request.movie
+      newReview.movie = movie
       newReview.save()
-      return redirect('detail', newReview.movie.id)
+      return redirect('movie_detail', newReview.movie_id)
     
     except ValueError: 
       return render(request, 'createreview.html', {

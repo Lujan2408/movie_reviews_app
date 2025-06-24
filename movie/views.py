@@ -21,8 +21,12 @@ def movie_detail(request, movie_id):
   # We use get_object_or_404 to get the specific movie object we want.
   # We provide movie_id as the primary key, pk=movie_id. If there is a match, get_object_or_404, as its name suggests, returns us the object or the not found (404) object.
   movie = get_object_or_404(Movie, pk=movie_id)
+  reviews = Review.objects.filter(movie = movie) #Using the filter function, we retrieve reviews for a particular movie only
+  
+  #  We then pass in the reviews to detail.html:
   return render(request, 'detail.html', {
-    'movie': movie
+    'movie': movie,
+    'reviews': reviews
   })
 
 def about(request):

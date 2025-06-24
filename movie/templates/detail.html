@@ -38,7 +38,7 @@
             <a class="btn btn-primary me-2" 
               href="{% url 'updatereview' review.id %}">Update</a>
             <a class="btn btn-danger"
-              href="#">Delete</a>
+              href="{% url 'deletereview' review.id %}">Delete</a>
             {% endif %}
           </li>
         {% endfor %}

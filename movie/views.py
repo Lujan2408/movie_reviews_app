@@ -29,9 +29,6 @@ def movie_detail(request, movie_id):
     'reviews': reviews
   })
 
-def about(request):
-  return HttpResponse('<h1>Welcome to About Page</h1>')
-
 def signUp(request): 
   email = request.GET.get('email')
   return render(request, 'signUp.html', {
@@ -65,4 +62,26 @@ def create_review(request, movie_id):
       return render(request, 'createreview.html', {
         'form': ReviewForm(), 
         'error': 'Bad data passed in'
+      })
+      
+def updatereview(request, review_id): 
+  # We first retrieve the review object with the review ID
+  review = get_object_or_404(Review, pk=review_id, user=request.user)
+  
+  if request.method == 'GET': 
+    form = ReviewForm(instance=review)
+    return render(request, 'updatereview.html', {
+      'review': review,
+      'form': form
+    })
+  else: 
+    try:
+      form = ReviewForm(request.POST, instance=review)
+      form.save()
+      return redirect('movie_detail', review.movie.id) # type: ignore
+    
+    except ValueError: 
+      return render(request, 'updatereview.html', {
+        'review': review,
+        'error': 'Bad data in form'
       })

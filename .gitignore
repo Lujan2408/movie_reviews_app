@@ -85,7 +85,3 @@ local_settings.py
 
 .env
 db.sqlite3
-
-# Img
-*.jpg
-*.png

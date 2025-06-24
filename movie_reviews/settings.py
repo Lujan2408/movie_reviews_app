@@ -132,3 +132,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Images config 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+# This redirects a user (who is not logged in) to the login page when they attempt to access an authorized page
+LOGIN_URL = 'loginaccount'

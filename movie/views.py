@@ -1,8 +1,8 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect
 from .models import Movie, Review
 from .forms import ReviewForm
+from django.contrib.auth.decorators import login_required
 
 def home(request):
   searchTerm = request.GET.get('searchMovie')
@@ -35,6 +35,7 @@ def signUp(request):
     'email' : email
   })
   
+@login_required
 def create_review(request, movie_id):
   # First get the object from db:
   movie = get_object_or_404(Movie, pk=movie_id)
@@ -63,7 +64,8 @@ def create_review(request, movie_id):
         'form': ReviewForm(), 
         'error': 'Bad data passed in'
       })
-      
+ 
+@login_required     
 def updatereview(request, review_id): 
   # We first retrieve the review object with the review ID
   review = get_object_or_404(Review, pk=review_id, user=request.user)
@@ -86,6 +88,7 @@ def updatereview(request, review_id):
         'error': 'Bad data in form'
       })
 
+@login_required
 def deletereview(request, review_id):
   review = get_object_or_404(Review, pk=review_id, user=request.user)
   review.delete()

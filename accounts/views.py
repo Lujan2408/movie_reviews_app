@@ -4,6 +4,7 @@ from .forms import UserCreateForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate # type: ignore
 from django.db import IntegrityError
+from django.contrib.auth.decorators import login_required
 
 def signupaccount(request):
   # If there´s a GET request it means that there's a user navigating to the sign up form via URL(localhost:8000/accounts/signupaccount) then we send them to the login form 
@@ -52,6 +53,7 @@ def loginaccount(request):
       login(request, user)
       return redirect('home')
 
+@login_required
 def logoutaccount(request): 
   logout(request)
   return redirect('home')
